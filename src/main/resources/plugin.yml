@@ -1,0 +1,11 @@
+name: CustomBlocks
+version: '${project.version}'
+main: de.nauren.customblocks.Main
+api-version: '1.21'
+commands:
+  cb:
+    description: Custom Block commands
+    usage: /<command>
+    aliases: [customblock]
+    permission: customblocks.admin
+    permission-message: You do not have permission to use this command.
