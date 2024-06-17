@@ -48,8 +48,12 @@ public class BreakEvent implements Listener {
         for (Entity entity : block.getChunk().getEntities()) {
             if (entity instanceof ItemDisplay) {
                 ItemDisplay itemDisplay = (ItemDisplay) entity;
+                Location itemDisplayLocation = itemDisplay.getLocation();
 
-                if (blockLocation.equals(itemDisplay.getLocation())) {
+                itemDisplayLocation.setYaw(blockLocation.getYaw());
+                itemDisplayLocation.setPitch(blockLocation.getPitch());
+
+                if (blockLocation.equals(itemDisplayLocation)) {
                     ItemStack displayedItem = itemDisplay.getItemStack();
                     assert displayedItem != null;
                     ItemMeta meta = displayedItem.getItemMeta();

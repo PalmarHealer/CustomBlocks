@@ -2,12 +2,14 @@ package de.nauren.customblocks.events;
 
 import de.nauren.customblocks.util.FileManager;
 import org.bukkit.GameMode;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerResourcePackStatusEvent;
+import org.bukkit.plugin.Plugin;
 
 import java.util.HashMap;
 import java.util.UUID;
@@ -41,22 +43,23 @@ public class ResourcePackStatus implements Listener {
 
         switch (status) {
             case SUCCESSFULLY_LOADED:
-                player.setGameMode(GameMode.SURVIVAL);
                 resourcePackLoading.put(player.getUniqueId(), false);
-                player.sendMessage("§7Resource Pack erfolgreich geladen!");
+                player.sendMessage("§7Resource Pack successfully loaded!");
+
+                Bukkit.getScheduler().runTaskLater((Plugin) this, () -> player.setGameMode(GameMode.SURVIVAL), 20L);
                 break;
             case DECLINED:
                 resourcePackLoading.put(player.getUniqueId(), false);
                 break;
             case FAILED_DOWNLOAD:
-                player.setGameMode(GameMode.SURVIVAL);
                 resourcePackLoading.put(player.getUniqueId(), false);
-                player.sendMessage("§7Fehler beim Herunterladen des Resource Packs.");
+                player.sendMessage("§7Failed to download Resource Packs.");
+
+                Bukkit.getScheduler().runTaskLater((Plugin) this, () -> player.setGameMode(GameMode.SURVIVAL), 20L);
                 break;
             case ACCEPTED:
                 player.setGameMode(GameMode.SPECTATOR);
                 resourcePackLoading.put(player.getUniqueId(), true);
-                player.sendMessage("§7Resource Pack akzeptiert. Wird geladen...");
                 break;
         }
     }
